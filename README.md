@@ -106,7 +106,9 @@ npm run dev
 ## 📸 Screenshots
 
 <img width="1440" height="777" alt="Screenshot 2025-11-12 at 12 35 05 AM" src="https://github.com/user-attachments/assets/c6bdd113-8fa0-47a4-859f-b20537f8cac3" />
-
+<img width="1440" height="779" alt="Screenshot 2025-11-12 at 12 35 20 AM" src="https://github.com/user-attachments/assets/77f87488-c3f9-4005-83ad-7adea67357e9" />
+<img width="1438" height="778" alt="Screenshot 2025-11-12 at 12 35 32 AM" src="https://github.com/user-attachments/assets/737e9ab2-5e7e-4312-ae0d-42783520d0b8" />
+<img width="1440" height="777" alt="Screenshot 2025-11-12 at 12 35 42 AM" src="https://github.com/user-attachments/assets/01483bc3-8a0a-409f-b2b2-c99fe76d6fb0" />
 
 * **Routes Page** – Add new routes and set baseline
 * **Comparison Page** – View intensity diffs and compliance status
