@@ -111,5 +111,4 @@ npm run test
 
 ## ✍️ Author
 
-Built with support from AI agents (Cursor, Windsurf, Copilot, Claude).  
-FuelEU Regulation (Regulation (EU) 2023/1805) Annex II and IV-compliant.
+Built with support from AI agents (Cursor, Windsurf, Copilot, Claude). 
