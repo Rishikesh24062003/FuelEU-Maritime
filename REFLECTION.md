@@ -1,0 +1,7 @@
+# Reflection
+
+Over this phase I leaned heavily on Cascade as a pairing assistant. Delegating repetitive wiring—like reconnecting Express controllers to repository ports or configuring Vitest with jsdom—freed me to focus on validating business rules. The agent surfaced edge issues quickly (e.g., the missing `/api/v1` prefix) and provided ready-to-run patches, which was faster than manually spelunking through files.
+
+Compared to working solo, the biggest efficiency gain came from accelerated context switching. Instead of pausing to look up syntax or craft boilerplate tests, I described the intent and let the agent generate drafts while I reviewed outputs against domain requirements. There were occasional hiccups—the initial Vite config edits needed adjustments for ESM typing, and I still had to seed the database myself—but overall the iteration loop tightened considerably.
+
+Next time I would refine how I structure prompts and checkpoints: summarizing desired file shapes up front and explicitly noting environmental constraints (ESM vs CJS, existing seed data) would reduce follow-up patches. I’d also automate validation (e.g., add CI Vitest runs) so agent-generated suites are exercised immediately. The experience confirmed that a collaborative agent can deliver significant momentum, provided I stay diligent about review, seeding data, and rerunning dev servers after each batch of changes.
