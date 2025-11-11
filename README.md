@@ -1,33 +1,43 @@
-# FuelEU Maritime Compliance App
+# 🚢 FuelEU Maritime Compliance App
 
-A full-stack web application to calculate and monitor GHG compliance metrics for ships and shipping routes as per the **FuelEU Maritime regulation**.
+A full-stack web application to calculate and monitor GHG compliance metrics for maritime routes, in full alignment with [FuelEU Maritime Regulation (EU) 2023/1805](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX%3A32023R1805).
 
 ---
 
 ## 🌐 Features
-- Add shipping routes and calculate GHG intensity (gCO₂e/MJ)
-- Set a baseline route and compare all others with percentDiff
-- Compute compliance balance (CB) for each ship per year
-- Bank and transfer GHG surplus credits
-- Create emission pools to balance fleet-wide compliance
+
+* Add and manage ship routes with GHG metrics
+* Automatically compute GHG intensity (`gCO₂e/MJ`)
+* Set and switch the regulatory baseline route
+* Compare route emissions and assess compliance
+* Compute **Compliance Balance (CB)** per year
+* Bank surplus credits and transfer them across ships
+* Form **emissions pools** to manage fleet-level compliance
 
 ---
 
 ## 🏗️ Architecture
 
-**Hexagonal structure**:
+Strict Hexagonal Architecture — core business logic is fully decoupled from framework and infrastructure:
 
 ```
-core/        <-- FuelEU calculations, pure TS
-ports/       <-- interfaces for adapters
-adapters/
-  inbound/   <-- Express routes
-  outbound/  <-- Prisma/PostgreSQL repo
+backend/
+├── core/          # GHG formulas, domain logic
+├── ports/         # Interfaces (repositories, services)
+├── adapters/
+│   ├── inbound/   # Express controllers and routes
+│   └── outbound/  # Prisma (PostgreSQL) database adapters
 ```
 
-Frontend: React + TypeScript + Tailwind  
-Backend: Node.js + Express + TypeScript + Prisma + PostgreSQL  
-Tested with Jest, Supertest, React Testing Library
+Frontend (Vite + React + Tailwind):
+
+```
+frontend/
+├── pages/         # Tabbed pages: Routes, Compare, Banking, Pooling
+├── components/    # Tables, forms, input fields
+├── adapters/      # API hooks and fetch clients
+└── utils/         # Shared GHG computation helpers
+```
 
 ---
 
@@ -43,6 +53,12 @@ npx prisma db seed
 npm run dev
 ```
 
+> Add a `.env` file:
+
+```env
+DATABASE_URL=postgresql://postgres:postgres@localhost:5432/fuel_eu
+```
+
 ### Frontend
 
 ```bash
@@ -51,43 +67,51 @@ npm install
 npm run dev
 ```
 
-Set `.env` in backend:
-
-```
-DATABASE_URL=postgresql://postgres:postgres@localhost:5432/fuel_eu
-```
-
 ---
 
 ## ✅ API Overview
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET    | `/routes` | List all ship routes |
-| POST   | `/routes` | Add a new route (computes intensity) |
-| POST   | `/routes/:id/baseline` | Set selected route as baseline |
-| GET    | `/routes/comparison` | Compare routes vs baseline |
-| GET    | `/compliance/cb?year=2024` | Compliance balance per route |
-| POST   | `/banking/bank` | Bank GHG surplus |
-| POST   | `/banking/apply` | Transfer surplus |
-| POST   | `/pools` | Form emission pool |
+| Method | Endpoint                   | Description                          |
+| ------ | -------------------------- | ------------------------------------ |
+| GET    | `/routes`                  | List all ship routes                 |
+| POST   | `/routes`                  | Add new route (auto-calculates GHG)  |
+| POST   | `/routes/:id/baseline`     | Set route as regulatory baseline     |
+| GET    | `/routes/comparison`       | Compare all routes to baseline       |
+| GET    | `/compliance/cb?year=2024` | Get CB for all ships (year-filtered) |
+| POST   | `/banking/bank`            | Bank surplus emissions               |
+| POST   | `/banking/apply`           | Transfer CB to another ship          |
+| POST   | `/pools`                   | Form a GHG emissions pooling group   |
 
 ---
 
 ## 📐 Key FuelEU Formulas
 
-- `GHG_Intensity = f_wind × (WtT + TtW)`
-- `Energy [MJ] = fuelConsumption_tonnes × 41,000 MJ/t`
-- `CB [gCO₂e] = (Target - Actual) × Energy`
-- `percentDiff = ((comparison / baseline) - 1) × 100`
+* **GHG Intensity:**
+  `GHG_Intensity = f_wind × (WtT + TtW)`
 
-Target GHG Intensity (2025): **89.3368 gCO₂e/MJ**
+* **Energy [MJ]:**
+  `Energy = fuelConsumption_tonnes × 41,000`
+
+* **Compliance Balance (CB):**
+  `CB = (Target - Actual) × Energy`
+
+* **Percent Difference:**
+  `((comparison / baseline) - 1) × 100`
+
+> **Target GHG Intensity (2025): 89.3368 gCO₂e/MJ**
+> (As per Regulation Annex IV Article 4(2))
 
 ---
 
 ## 📸 Screenshots
 
-Add actual UI screenshots here (RoutesPage, ComparePage, etc.)
+<img width="1440" height="777" alt="Screenshot 2025-11-12 at 12 35 05 AM" src="https://github.com/user-attachments/assets/c6bdd113-8fa0-47a4-859f-b20537f8cac3" />
+
+
+* **Routes Page** – Add new routes and set baseline
+* **Comparison Page** – View intensity diffs and compliance status
+* **Banking Panel** – Manage surplus and transfer
+* **Pooling UI** – Balance compliance across a fleet
 
 ---
 
@@ -100,6 +124,10 @@ cd backend
 npm run test
 ```
 
+* Core calculation tests (Jest)
+* API integration tests (Supertest)
+* Validated using seeded DB records
+
 ### Frontend
 
 ```bash
@@ -107,8 +135,19 @@ cd frontend
 npm run test
 ```
 
+* Component rendering tests (React Testing Library)
+* Interaction + form logic
+* Mocked API validation
+
 ---
 
 ## ✍️ Author
 
-Built with support from AI agents (Cursor, Windsurf, Copilot, Claude). 
+Built with the support of advanced AI agents:
+
+* **Cursor** – file scaffolding, route automation
+* **Windsurf** – architecture compliance & refinements
+* **Copilot** – boilerplate suggestions
+* **Claude Code** – function refactoring and formatting
+
+This project demonstrates a production-ready FuelEU Maritime compliance platform built using modern frameworks and AI-driven development techniques — backed by domain-accurate emissions computation logic.
