@@ -66,5 +66,3 @@ The project reinforced that:
 
 I treated the agent as a junior developer and myself as the responsible engineer.
 That mindset ensured a production-ready, test-covered, maintainable codebase.
-
----
